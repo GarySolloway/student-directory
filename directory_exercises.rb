@@ -32,7 +32,11 @@ def input_students
 
     # add the student hash to the array
     students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
-    puts "Now we have #{students.count} students"
+
+    # display student count, singular/plural
+    student_count = "Now we have #{students.count} student"
+    student_count << "s" if students.count > 1
+    puts student_count
 
     puts "To continue, press enter or type 'exit' to quit."
     choice = gets.chomp
@@ -63,7 +67,9 @@ def print(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(40)
+  footer_text = "Overall, we have #{students.count} great student"
+  footer_text << "s" if students.count > 1
+  puts footer_text.center(40)
 end
 
 students = input_students
