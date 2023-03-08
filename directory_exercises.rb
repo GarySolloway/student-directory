@@ -7,7 +7,7 @@ def input_students
   while true do
     puts "Enter the student's name"
     # get name or set default
-    name = gets.chomp
+    name = gets.gsub("\n","") # using gsub as an alternative to chomp
     name = "Student ##{students.count + 1}" if name.empty?
 
     puts "Enter the cohort"
