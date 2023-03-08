@@ -6,32 +6,30 @@ def input_students
   # while true, repeat this code
   while true do
     puts "Enter the student's name"
-    # get name or set default
+    # get name
     name = gets.gsub("\n","") # using gsub as an alternative to chomp
-    name = "Student ##{students.count + 1}" if name.empty?
 
     puts "Enter the cohort"
-    # get cohort or set default
+    # get cohort
     cohort = gets.chomp.capitalize.to_sym
-    cohort = "Unknown Cohort" if cohort.empty?
 
     puts "Enter the student's hobbies, separated by commas"
-    # get hobbies or default
+    # get hobbies
     hobbies = gets.chomp
-    hobbies = "n/a" if hobbies.empty?
 
     puts "Enter the student's country of birth"
-    # get country or set default
+    # get country
     country = gets.chomp
-    country = "n/a" if country.empty?
 
     puts "Enter the student's height (ft in)"
-    # get height or set default
+    # get height
     height = gets.chomp
-    height = "n/a" if height.empty?
 
-    # add the student hash to the array
-    students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
+    # only add the student if a name was provided
+    if !name.empty?
+      # add the student hash to the array
+      students << {name: name, cohort: cohort, hobbies: hobbies, country: country, height: height}
+    end
 
     # display student count, singular/plural
     student_count = "Now we have #{students.count} student"
@@ -53,6 +51,11 @@ def print_header
 end
 
 def print(students)
+  # check if any students
+  if students.count == 0
+    return puts "No students found".center(39)
+  end
+
   # get list of cohorts
   cohorts = students.map { |cohort| cohort[:cohort] }.uniq
   # group students by cohort
