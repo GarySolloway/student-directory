@@ -12,7 +12,7 @@ def input_students
 
     puts "Enter the cohort"
     # get cohort or set default
-    cohort = gets.chomp.to_sym
+    cohort = gets.chomp.capitalize.to_sym
     cohort = "Unknown Cohort" if cohort.empty?
 
     puts "Enter the student's hobbies, separated by commas"
@@ -49,10 +49,16 @@ def print_header
 end
 
 def print(students)
-  i = 0
-  while i < students.length do
-    puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]}) | Hobbies: #{students[i][:hobbies]} | Country of birth: #{students[i][:country]} | Height: #{students[i][:height]}"
-    i += 1
+  # get list of cohorts
+  cohorts = students.map { |cohort| cohort[:cohort] }.uniq
+  # group students by cohort
+  cohorts.each do |cohort|
+    puts "#{cohort} cohort:"
+    students.each_with_index do |student, index|
+      if student[:cohort] == cohort
+        puts "#{index + 1}. #{student[:name]} | Hobbies: #{student[:hobbies]} | Country of birth: #{student[:country]} | Height: #{student[:height]}"
+      end
+    end
   end
 end
 
