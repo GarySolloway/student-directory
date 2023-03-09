@@ -12,6 +12,7 @@ def input_students
     # add the student hash to the array
     cohort = "november"
     add_student(name, cohort)
+    puts "Student added!"
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -50,7 +51,7 @@ def menu_options(selection)
   when "4"
     load_students
   when "9"
-    exit
+    abort("Bye!") # quits the program
   else
     puts "I don't know what you meant, try again"
   end
@@ -81,6 +82,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Data saved successfully!"
 end
 
 def load_students(filename = "students.csv")
@@ -90,6 +92,7 @@ def load_students(filename = "students.csv")
     add_student(name, cohort)
   end
   file.close
+  puts "The data was loaded!, choose option 2 to display it."
 end
 
 def try_load_students
