@@ -1,3 +1,4 @@
+require "csv"
 @students = [] # an empty array accessible to all methods
 
 def input_students
@@ -77,12 +78,10 @@ def save_students
   puts "Enter a name for the file"
   filename = STDIN.gets.chomp + ".csv"
   # open the file for writing
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "w") do |csv|
     # iterate over the array of students 
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << [student[:name], student[:cohort]]
     end
   end
   puts "Data saved successfully to '#{filename}'"
@@ -96,11 +95,9 @@ def load_students(filename = nil)
   end
 
   if File.exists?(filename) # if file exists
-    File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-        name, cohort = line.chomp.split(",")
-        add_student(name, cohort)
-      end
+    CSV.foreach(filename) do |row| # add each line as a hash to @students array
+      name, cohort = row
+      add_student(name, cohort)
     end
     puts "#{filename} was loaded successfully!, choose option 2 to display it."
   else # if file doesn't exist
